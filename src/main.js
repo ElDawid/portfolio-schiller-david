@@ -277,6 +277,7 @@ k.scene("main", async () => {
         }
     }
 
+    setFontSize(k);
     setCamScale(k);
     k.onResize(() => {
         setCamScale(k);
