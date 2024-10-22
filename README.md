@@ -10,12 +10,12 @@ Ce jeu est prévu pour avoir une version mobile car j'avais dans l'idée de donn
 
 ## Table des matières :
 
-- [Technologies utilisees](#technologies-utilisees)
-- [Installation](#installation)
-- [Utilisation](#utilisation)
-- [Fonctionnalites](#fonctionnalites)
-- [Auteurs](#auteurs)
-- [Licence](#licence)
+- [Technologies utilisees](# technologies-utilisees)
+- [Installation](# installation)
+- [Utilisation](# utilisation)
+- [Fonctionnalites](# fonctionnalites)
+- [Auteurs](# auteurs)
+- [Licence](# licence)
 
 
 
@@ -33,8 +33,10 @@ Ce jeu est prévu pour avoir une version mobile car j'avais dans l'idée de donn
 
 ## Installation :
 
-Instructions pour cloner le projet et l'exécuter localement:w
+Instructions pour cloner le projet et l'exécuter localement :
 
+
+Dans le terminal windows, taper:
 ```bash
 git clone https://github.com/ElDawid/portfolio-schiller-david.git
 cd portfolio-schiller-david
@@ -45,7 +47,7 @@ npm install
 
 ## Utilisation :
 
-Taper dans la console :
+Dans le terminal windows, taper:
 ```bash
 npm start
 ```
@@ -59,7 +61,7 @@ Aller sur http://localhost:5173/
 |---------------------------|-------------------------|
 | Afficher le CV            | PC                      |
 | Afficher le LinkedIn      | PC                      |
-| Activer / Couper musique  | Bouton                  |
+| Activer / Couper musique  | Bouton Musique          |
 | Se déplacer               | Click / Toucher écrant  |
 
 
@@ -75,4 +77,4 @@ Collaborateurs : *Aucun*
 ## License :
 
 - The **code** in this repository is licensed under the **MIT License**. You are free to use, modify, and distribute it, as long as you include the original license.
-- The **assets** (*images, sounds, fonts, etc.*) in this repository are licensed under the **Creative Commons BY-NC-ND 4.0 License**. You may not use the assets for commercial purposes, nor can you modify or redistribute them without explicit permission.
+- The **assets** (*images and musics only*) in this repository are licensed under the **Creative Commons BY-NC-ND 4.0 License**. You may not use the assets for commercial purposes, nor can you modify or redistribute them without explicit permission.
