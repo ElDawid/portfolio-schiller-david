@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Schiller David</title>
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+  </head>
+  <body>
+    <div id="app">
+      <div id="ui">
+        <p class="note">Tap/Click around to move</p>
+        <div id="textbox-container" style="display: none">
+          <div id="textbox">
+            <p id="dialogue" class="ui-text"></p>
+            <div id="dialogue-options" class="dialogue-options">
+              <button id="option1" class="dialogue-option-btn">Option 1</button>
+              <button id="option2" class="dialogue-option-btn">Option 2</button>
+            </div>
+            <div class="btn-container">
+              <button id="close" class="ui-close-btn">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <canvas id="game"></canvas>
+    </div>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
