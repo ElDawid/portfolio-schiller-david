@@ -3,6 +3,11 @@ import { scale } from "../Constants";
 const tiles = [];
 const tileProps = [];
 
+export async function loadMapData() {
+    return await (await fetch("./map.json")).json();
+}
+
+
 // A la base je voulais faire une méthode afin de changer la tuile en fonction de ses coordonées,
 // au final, je préfère changer une texture par une autre
 export function changeTileTexture(layerString, oldFrame, newFrame) {

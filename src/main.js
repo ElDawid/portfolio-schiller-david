@@ -4,16 +4,18 @@ import { displayDialogue, setCamScale, setFontSize } from "./Utils";
 import loadSprites from "./SpriteLoader";
 import AudioManager from "./AudioManager";
 import { loadButton, updateButton } from "./gui/MusicButton";
-import { changeTileTexture, generateMap } from "./map/MapUtils";
+import { changeTileTexture, generateMap, loadMapData } from "./map/MapUtils";
 
 
 var secretSlab = true;
 let sourceOpenned = "";
-const mapData = await (await fetch("./map3.json")).json();
-const layers = mapData.layers;
+let mapData;
+let layers;
 //let printed = false;
 AudioManager.init(k);
 loadSprites(k);
+mapData = await loadMapData();
+layers = mapData.layers;
 
 k.setBackground(k.Color.fromHex("200030"));
 
