@@ -1,7 +1,7 @@
 
       @font-face {
         font-family: monogram;
-        src: url(monogram.ttf);
+        src: url("/assets/fonts/monogram.ttf") format('truetype');
       }
       body {
         font-family: monogram, monospace;;
