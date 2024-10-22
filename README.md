@@ -10,16 +10,16 @@ Ce jeu est prévu pour avoir une version mobile car j'avais dans l'idée de donn
 
 ## Table des matières :
 
-- [Technologies utilisées](#technologies-utilisées)
+- [Technologies utilisees](#technologies-utilisees)
 - [Installation](#installation)
 - [Utilisation](#utilisation)
-- [Fonctionnalités](#fonctionnalités)
+- [Fonctionnalites](#fonctionnalites)
 - [Auteurs](#auteurs)
 - [Licence](#licence)
 
 
 
-## Technologies utilisées :
+## Technologies utilisees :
 
 - **Langages** : JavaScript, HTML, CSS
 - **Frameworks** : Kaboom.js
@@ -53,7 +53,7 @@ Aller sur http://localhost:5173/
 
 
 
-## Fonctionnalités :
+## Fonctionnalites :
 
 |  Fonctionnalité           |    Interraction avec    |
 |---------------------------|-------------------------|
