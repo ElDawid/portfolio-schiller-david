@@ -33,7 +33,7 @@ Ce jeu est prévu pour avoir une version mobile car j'avais dans l'idée de donn
 
 ## Installation :
 
-Instructions pour cloner le projet et l'exécuter localement.
+Instructions pour cloner le projet et l'exécuter localement:w
 
 ```bash
 git clone https://github.com/ElDawid/portfolio-schiller-david.git

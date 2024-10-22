@@ -97,7 +97,7 @@ export function setFontSize(k) {
     
     for (let i = 0; i < noteElements.length; i++) {
         if (k.isTouchscreen()) {
-            noteElements[i].style.fontSize = "3rem";
+            noteElements[i].style.fontSize = "2rem";
         } else {
             noteElements[i].style.fontSize = "4rem";
         }

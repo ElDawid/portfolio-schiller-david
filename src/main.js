@@ -181,6 +181,21 @@ k.scene("main", async () => {
                                 changeTileTexture("props", 20, 18);
                                 changeTileTexture("props", 21, 19);
                                 player.chest_opened = true;
+                                displayDialogue(false,{},"...",()=>{
+                                    setTimeout(() => {
+                                        displayDialogue(false,{},"Incroyable !",()=>{
+                                            setTimeout(() => {
+                                                displayDialogue(false,{},"Mon code Source !",()=>{
+                                                    window.open("https://github.com/ElDawid/portfolio-schiller-david");
+                                                });
+                                                player.isInDialogue = false;
+                                            }, 400);
+                                        });
+                                    }, 400);
+                                });
+                                /*displayDialogue(false, {}, "...", () => ({
+                                    setTimeout(() => {console.log("lol")}, 1500);
+                                }));*/
                             }
                             // TODO : Dialogues coffres
                         }
