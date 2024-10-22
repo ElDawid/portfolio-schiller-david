@@ -23,6 +23,16 @@ k.loadSprite("button", "./btn.png",{
     sliceY:2
 });
 
+k.loadSprite("tableau-adams", "./creadams.png",{
+    sliceX:1,
+    sliceY:1
+});
+
+k.loadSprite("tableau-liberte", "./libdevantpeuple.png",{
+    sliceX:1,
+    sliceY:1
+});
+
 k.loadSprite("chim", "./chim.png", {
     sliceX: 1,  // 4 frames en X
     sliceY: 8,  // 1 seule ligne de frames

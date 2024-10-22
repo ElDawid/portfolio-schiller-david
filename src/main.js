@@ -68,6 +68,23 @@ k.scene("main", async () => {
         "chimney",
         k.z(1)
     ]);
+
+    k.add([
+        k.sprite("tableau-adams"),
+        k.pos(20*scale*16.1, 20*scale*3.1),
+        k.scale(2),
+        "tableau-adams",
+        k.z(1)
+    ]);
+
+    k.add([
+        k.sprite("tableau-liberte"),
+        k.pos(20*scale*22.9, 20*scale*10.1),
+        k.scale(1.4),
+        "tableau-liberte",
+        k.z(1)
+    ]);
+
     const computer = k.add([
         k.sprite("computer", { anim: "idle" }),
         k.pos(20*scale*11,20*scale*0),
