@@ -388,6 +388,61 @@
                  "width":29.9090909090909,
                  "x":225.090909090909,
                  "y":62.9090909090909
+                }, 
+                {
+                 "height":124.5,
+                 "id":48,
+                 "name":"tutorial",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":60,
+                 "x":189,
+                 "y":36
+                }, 
+                {
+                 "height":50.5,
+                 "id":49,
+                 "name":"suite",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":28,
+                 "x":437.5,
+                 "y":94.75
+                }, 
+                {
+                 "height":12,
+                 "id":50,
+                 "name":"adam",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":40.5,
+                 "x":179.75,
+                 "y":256.75
+                }, 
+                {
+                 "height":12,
+                 "id":51,
+                 "name":"liberte",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":22.75,
+                 "x":468.25,
+                 "y":237.5
+                }, 
+                {
+                 "height":8,
+                 "id":52,
+                 "name":"lilas",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":17,
+                 "x":441.5,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -396,7 +451,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":48,
+ "nextobjectid":53,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
@@ -404,11 +459,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/maps\/Basics.tsx"
-        }, 
-        {
-         "firstgid":113,
-         "source":"..\/..\/maps\/base_map.tsx"
+         "source":"basic.tsx"
         }],
  "tilewidth":20,
  "type":"map",

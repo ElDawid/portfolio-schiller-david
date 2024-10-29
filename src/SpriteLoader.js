@@ -33,6 +33,11 @@ k.loadSprite("tableau-liberte", "./libdevantpeuple.png",{
     sliceY:1
 });
 
+k.loadSprite("lilas", "./lilas.png",{
+    sliceX:1,
+    sliceY:1
+});
+
 k.loadSprite("chim", "./chim.png", {
     sliceX: 1,  // 4 frames en X
     sliceY: 8,  // 1 seule ligne de frames
@@ -66,6 +71,15 @@ k.loadSprite("smoke", "./smoke_effect.png", {
     sliceY: 1,
     anims: {
         "smoke": { from: 0, to: 7, speed: 10, loop: false },
+    }
+});
+
+
+k.loadSprite("red_spark", "./red_spark.png", {
+    sliceX: 8,
+    sliceY: 1,
+    anims: {
+        "red_spark": { from: 0, to: 7, speed: 10, loop: true },
     }
 });
 }

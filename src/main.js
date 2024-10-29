@@ -46,6 +46,8 @@ k.scene("main", async () => {
         k.pos(),
         k.scale(playerScale),
         {
+            suite: false,
+            tutorial: false,
             copper_key : false, 
             chest_opened : false, 
             printed : false, 
@@ -71,7 +73,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("tableau-adams"),
-        k.pos(20*scale*16.1, 20*scale*3.1),
+        k.pos(20*scale*8.1, 20*scale*11.1),
         k.scale(2),
         "tableau-adams",
         k.z(1)
@@ -85,7 +87,7 @@ k.scene("main", async () => {
         k.z(1)
     ]);
 
-    const computer = k.add([
+    k.add([
         k.sprite("computer", { anim: "idle" }),
         k.pos(20*scale*11,20*scale*0),
         k.scale(scale),
@@ -93,7 +95,7 @@ k.scene("main", async () => {
         k.z(9)
     ]);
 
-    const printer = k.add([
+    k.add([
         k.sprite("printer", { anim: "idle" }),
         k.pos(20*scale*9,20*scale*0),
         k.scale(scale),
@@ -101,12 +103,31 @@ k.scene("main", async () => {
         k.z(9)
     ]);
 
-    const copper_key = k.add([
+    k.add([
         k.sprite("map_tileset", { frame: 56 }),
         k.pos(20*scale*24,20*scale*16),
         k.scale(scale),
+        "copper_key",
         k.z(9),
         k.opacity(0)
+    ]);
+
+    k.add([
+        k.sprite("lilas"),
+        k.pos(20*scale*22.4,20*scale*17.9),
+        k.scale(scale*0.8),
+        "lilas",
+        k.anchor("bot"),
+        k.z(11)
+    ]);
+    let darkOverlay = k.add([
+        k.rect(k.width()*scale, k.height()*scale), // Couvrir toute la scène
+        k.pos(player.pos.x,player.pos.y),
+        k.color(0, 0, 0), // Couleur noire
+        k.anchor("center"),
+        k.opacity(0), // Commencer avec une opacité de 0
+        "dark-overlay", // Étiquette pour référence
+        k.z(20) // Mettre l'overlay au-dessus des autres éléments
     ]);
 
     generateMap(k, mapData, layers);
@@ -122,6 +143,7 @@ k.scene("main", async () => {
                     event.name,  // Nom de l'événement
                 ]);
                 if(event.name === "dalle"){
+                    let copper_key = k.get("copper_key")[0];
                     player.onCollide(event.name, () => {
                         if (secretSlab) {
                             changeTileTexture("ground", 17, 31);
@@ -154,6 +176,7 @@ k.scene("main", async () => {
                     });
                 }
                 if(event.name === "copper_key" && !player.copper_key){
+                    let copper_key = k.get("copper_key")[0];
                     player.onCollide(event.name, () => {
                         k.destroy(copper_key);
                         player.copper_key = true;
@@ -205,6 +228,8 @@ k.scene("main", async () => {
                 if(event.name === "computer" ){
                     player.onCollide(event.name, () => {
                         player.isInDialogue = true;
+                        let computer = k.get("computer")[0];
+                        let printer = k.get("printer")[0];
                         displayDialogue(true, { option1: "Aller sur linkedIn", option2:"Imprimer le CV" }, "Le PC avec lequel je developpe mes projets, Que dois-je faire ?", () => 
                         {
                             document.addEventListener('computer-process', (event) => {
@@ -247,6 +272,72 @@ k.scene("main", async () => {
                         // TODO : OPTIONS
                     });
                 }
+                if(event.name === "tutorial" ){
+                    player.onCollide(event.name, () => {
+                        if (!player.tutorial) {
+                            player.isInDialogue = true;
+                            darkOverlay.opacity = 0.5;
+                            var red_spark = k.add([
+                                k.sprite("red_spark", { anim: "red_spark" }),  // Utiliser l'animation "explode"
+                                k.anchor("center"),
+                                k.pos(20*scale*11.95,20*scale*1),  // Position de l'explosion
+                                k.scale(scale),  // Optionnel : taille de l'explosion
+                                k.z(50)
+                            ]);
+                            displayDialogue(false,{},"Je peut utiliser mon PC afin de voir mon linkedIn ou pour imprimer mon CV !",()=>{
+                                k.destroy(red_spark);
+                                darkOverlay.opacity = 0;
+                                player.isInDialogue = false;
+                                player.tutorial = true;
+                            });
+                        }
+                    });
+                }
+                if(event.name === "suite" ){
+                    player.onCollide(event.name, () => {
+                        if (!player.suite) {
+                            player.isInDialogue = true;
+                            darkOverlay.opacity = 0.5;
+                            var red_spark = k.add([
+                                k.sprite("red_spark", { anim: "red_spark" }),  // Utiliser l'animation "explode"
+                                k.anchor("center"),
+                                k.pos(20*scale*25,20*scale*3.25),  // Position de l'explosion
+                                k.scale(scale),  // Optionnel : taille de l'explosion
+                                k.z(50)
+                            ]);
+                            displayDialogue(false,{},"J'ai cache d'autre choses !",()=>{
+                                k.destroy(red_spark);
+                                darkOverlay.opacity = 0;
+                                player.isInDialogue = false;
+                                player.suite = true;
+                            });
+                        }
+                    });
+                }
+                if(event.name === "adam" ){
+                    player.onCollide(event.name, () => {
+                            player.isInDialogue = true;
+                            displayDialogue(false,{},"\"La creation d'Adam\", j'aime beaucoup l'ironie qui s'en degage.",()=>{
+                                player.isInDialogue = false;
+                            });
+                    });
+                }
+                if(event.name === "liberte" ){
+                    player.onCollide(event.name, () => {
+                            player.isInDialogue = true;
+                            displayDialogue(false,{},"\"La liberte guidant le peuple\"",()=>{
+                                player.isInDialogue = false;
+                            });
+                    });
+                }
+                if(event.name === "lilas" ){
+                    player.onCollide(event.name, () => {
+                            player.isInDialogue = true;
+                            displayDialogue(false,{},"J'adore l'odeur des lilas.",()=>{
+                                player.isInDialogue = false;
+                            });
+                    });
+                }
             }
             continue;
         }
@@ -285,6 +376,7 @@ k.scene("main", async () => {
     })
 
     k.onUpdate(() => {
+        darkOverlay.pos = k.vec2(player.pos.x, player.pos.y);
         k.camPos(player.pos.x, player.pos.y-50);
         if (player.isInDialogue) {
             if (player.curAnim() == "walk-left") player.play("idle-left");
