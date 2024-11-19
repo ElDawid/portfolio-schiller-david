@@ -19,6 +19,14 @@ layers = mapData.layers;
 
 k.setBackground(k.Color.fromHex("200030"));
 
+// Bruitages Sonores
+k.loadSound("chest", "./special-effect/chest-opening.mp3");
+k.loadSound("pickup", "./special-effect/coin-recieved.mp3");
+k.loadSound("metal-sound", "./special-effect/metal-box.mp3");
+k.loadSound("poof-smoke", "./special-effect/poof-of-smoke.mp3");
+k.loadSound("win", "./special-effect/winning.mp3");
+
+// Musique
 k.loadSound("walkman", "./walkman.mp3").then(() => {
     console.log("Musique chargée avec succès.");
     //window.addEventListener("click", resumeAudio, { once: true });
@@ -195,6 +203,7 @@ k.scene("main", async () => {
                                 k.scale(scale),
                                 k.z(9)
                             ]);
+                            if (button.state === "on") k.play("poof-smoke");
                             var smoke = k.add([
                                 k.sprite("smoke", { anim: "smoke" }),  // Utiliser l'animation "explode"
                                 k.anchor("center"),
@@ -212,6 +221,7 @@ k.scene("main", async () => {
                 if(event.name === "copper_key" && !player.copper_key){
                     let copper_key = k.get("copper_key")[0];
                     player.onCollide(event.name, () => {
+                        if (button.state === "on") k.play("pickup");
                         k.destroy(copper_key);
                         player.copper_key = true;
                     });
@@ -222,6 +232,7 @@ k.scene("main", async () => {
                             let bankdoor = k.get("bankdoor")[0];
                             player.bankdoor_opened = true;
                             bankdoor.play("open");
+                            if (button.state === "on") k.play("metal-sound");
                             bankdoor.onAnimEnd((anim) => {
                                 if (anim === "open") {
                                     bankdoor.play("opened")
@@ -251,6 +262,7 @@ k.scene("main", async () => {
                             displayDialogue(false, {}, "Je ne peut pas ouvrir ce coffre, je deuvrais trouver une cle...", () => (player.isInDialogue = false));
                         } else {
                             if (!player.chest_opened) {
+                                if (button.state === "on") k.play("poof-smoke");
                                 var smoke = k.add([
                                     k.sprite("smoke", { anim: "smoke" }),  // Utiliser l'animation "explode"
                                     k.anchor("center"),
@@ -258,6 +270,7 @@ k.scene("main", async () => {
                                     k.scale(scale),  // Optionnel : taille de l'explosion
                                     k.z(50)
                                 ]);
+                                if (button.state === "on") k.play("chest");
                                 smoke.onAnimEnd(() => {
                                     k.destroy(smoke); 
                                 });
@@ -269,6 +282,7 @@ k.scene("main", async () => {
                                 displayDialogue(false,{},"...",()=>{
                                     setTimeout(() => {
                                         displayDialogue(false,{},"Incroyable !",()=>{
+                                            if (button.state === "on") k.play("win");
                                             setTimeout(() => {
                                                 displayDialogue(false,{},"Mon code Source !",()=>{
                                                     window.open("https://github.com/ElDawid/portfolio-schiller-david");
