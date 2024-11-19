@@ -49,7 +49,8 @@ k.scene("main", async () => {
             suite: false,
             tutorial: false,
             copper_key : false, 
-            chest_opened : false, 
+            chest_opened : false,
+            bankdoor_opened : false,
             printed : false, 
             speed: 180,
             direction: "right",
@@ -120,6 +121,18 @@ k.scene("main", async () => {
         k.anchor("bot"),
         k.z(11)
     ]);
+
+
+    k.add([
+        k.sprite("bankdoor", { anim: "idle" }),
+        k.pos(20*scale*16, 20*scale*13),
+        k.scale(1.8),
+        "bankdoor",
+        k.anchor("bot"),
+        k.z(10)
+    ]);
+
+
     let darkOverlay = k.add([
         k.rect(k.width()*scale, k.height()*scale), // Couvrir toute la scène
         k.pos(player.pos.x,player.pos.y),
@@ -180,6 +193,13 @@ k.scene("main", async () => {
                     player.onCollide(event.name, () => {
                         k.destroy(copper_key);
                         player.copper_key = true;
+                    });
+                }
+                if(event.name === "bankdoor" && !player.bankdoor_opened){
+                    let bankdoor = k.get("bankdoor")[0];
+                    player.onCollide(event.name, () => {
+                        bankdoor.play("open");
+                        player.bankdoor_opened = true;
                     });
                 }
                 if(event.name === "coffre"){
@@ -305,7 +325,7 @@ k.scene("main", async () => {
                                 k.scale(scale),  // Optionnel : taille de l'explosion
                                 k.z(50)
                             ]);
-                            displayDialogue(false,{},"J'ai cache d'autre choses !",()=>{
+                            displayDialogue(false,{},"J'ai cache d'autres choses !",()=>{
                                 k.destroy(red_spark);
                                 darkOverlay.opacity = 0;
                                 player.isInDialogue = false;

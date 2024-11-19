@@ -82,4 +82,14 @@ k.loadSprite("red_spark", "./red_spark.png", {
         "red_spark": { from: 0, to: 7, speed: 10, loop: true },
     }
 });
+
+k.loadSprite("bankdoor", "./bankdoor.png", {
+    sliceX: 15,  // 4 frames en X
+    sliceY: 2,  // 1 seule ligne de frames
+    anims: {
+        "idle": { from: 0, to: 0, loop: true },
+        "open": { from: 0, to: 28, loop: false, speed: 8 }
+    }
+});
+
 }

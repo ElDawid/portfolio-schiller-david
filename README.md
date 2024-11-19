@@ -10,12 +10,12 @@ Ce jeu est prévu pour avoir une version mobile car j'avais dans l'idée de donn
 
 ## Table des matières :
 
-- [Technologies utilisees](# technologies-utilisees)
-- [Installation](# installation)
-- [Utilisation](# utilisation)
-- [Fonctionnalites](# fonctionnalites)
-- [Auteurs](# auteurs)
-- [Licence](# licence)
+- [Technologies utilisees](#technologies-utilisees)
+- [Installation](#installation)
+- [Utilisation](#utilisation)
+- [Fonctionnalites](#fonctionnalites)
+- [Auteurs](#auteurs)
+- [Licence](#licence)
 
 
 
