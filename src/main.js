@@ -6,7 +6,7 @@ import AudioManager from "./AudioManager";
 import { loadButton, updateButton } from "./gui/MusicButton";
 import { changeTileTexture, generateMap, loadMapData } from "./map/MapUtils";
 
-
+let inside = false;
 var secretSlab = true;
 let sourceOpenned = "";
 let mapData;
@@ -122,10 +122,18 @@ k.scene("main", async () => {
         k.z(11)
     ]);
 
+    k.add([
+        k.sprite("doorwall"),
+        k.pos(20*scale*18, 20*scale*5),
+        k.scale(scale),
+        "doorwall",
+        k.anchor("bot"),
+        k.z(10)
+    ]);
 
     k.add([
         k.sprite("bankdoor", { anim: "idle" }),
-        k.pos(20*scale*16, 20*scale*13),
+        k.pos(20*scale*18, 20*scale*5),
         k.scale(1.8),
         "bankdoor",
         k.anchor("bot"),
@@ -146,6 +154,19 @@ k.scene("main", async () => {
     generateMap(k, mapData, layers);
 
     for(const layer of layers) {
+        if(layer.name === "boundaries") {
+            for (const boundary of layer.objects) {
+                map.add([
+                    k.area({
+                        shape: new k.Rect(k.vec2(0), boundary.width, boundary.height),
+                    }),
+                    k.body({ isStatic: true }),
+                    k.pos(boundary.x, boundary.y),
+                    boundary.name
+                ]);
+            }
+            continue;
+        }
         if(layer.name === "events") {
             for (const event of layer.objects) {
                 map.add([
@@ -195,11 +216,32 @@ k.scene("main", async () => {
                         player.copper_key = true;
                     });
                 }
-                if(event.name === "bankdoor" && !player.bankdoor_opened){
-                    let bankdoor = k.get("bankdoor")[0];
+                if(event.name === "bankdoor") {
                     player.onCollide(event.name, () => {
-                        bankdoor.play("open");
-                        player.bankdoor_opened = true;
+                        if (!player.bankdoor_opened) {
+                            let bankdoor = k.get("bankdoor")[0];
+                            player.bankdoor_opened = true;
+                            bankdoor.play("open");
+                            bankdoor.onAnimEnd((anim) => {
+                                if (anim === "open") {
+                                    bankdoor.play("opened")
+                                    //let boundary = k.get("close");
+                                    //console.log(map)
+                                    map.remove(map.get("close-boundary")[0])
+                                    //test.hidden = true;
+                                    //map.destroy(test)
+                                    //console.log("pute")
+                                    //boundary.forEach( (bound) => bound.id == 58 ? bound.visible = false : console.log("zut"))
+                                    //boundary.hidden = true;
+
+                                    /*map.children().forEach(child => {
+                                        if (child.name === "close") {
+                                            console.log("Trouvé l'objet 'bankdoor'", child);
+                                        }
+                                    });*/
+                                }
+                            });
+                        }
                     });
                 }
                 if(event.name === "coffre"){
@@ -244,6 +286,23 @@ k.scene("main", async () => {
                         }
                             
                     });
+                }
+                if(event.name === "switch_bankdoor_enter" ){
+                    player.onCollide(event.name, () => {
+                        let bd=k.get('bankdoor')[0]
+                        let dw=k.get('doorwall')[0]
+                        bd.z = 50
+                        dw.z = 49
+
+                    })
+                }
+                if(event.name === "switch_bankdoor_exit" ){
+                    player.onCollide(event.name, () => {
+                        let bd=k.get('bankdoor')[0]
+                        let dw=k.get('doorwall')[0]
+                        bd.z = 9
+                        dw.z = 8
+                    })
                 }
                 if(event.name === "computer" ){
                     player.onCollide(event.name, () => {
@@ -361,19 +420,7 @@ k.scene("main", async () => {
             }
             continue;
         }
-        if(layer.name === "boundaries") {
-            for (const boundary of layer.objects) {
-                map.add([
-                    k.area({
-                        shape: new k.Rect(k.vec2(0), boundary.width, boundary.height),
-                    }),
-                    k.body({ isStatic: true }),
-                    k.pos(boundary.x, boundary.y),
-                    boundary.name,
-                ]);
-            }
-            continue;
-        }
+        
         if (layer.name === "spawnpoints") {
             for (const entity of layer.objects) {
                 if (entity.name === "player") {
