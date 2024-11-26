@@ -221,7 +221,7 @@ k.scene("main", async () => {
                 if(event.name === "copper_key" && !player.copper_key){
                     let copper_key = k.get("copper_key")[0];
                     player.onCollide(event.name, () => {
-                        if (button.state === "on") k.play("pickup", { volume: 0.4 });
+                        if (button.state === "on" && !player.copper_key) k.play("pickup", { volume: 0.4 });
                         k.destroy(copper_key);
                         player.copper_key = true;
                     });
