@@ -259,7 +259,7 @@ k.scene("main", async () => {
                     player.onCollide(event.name, () => {
                         if (!player.copper_key) {
                             player.isInDialogue = true;
-                            displayDialogue(false, {}, "Je ne peut pas ouvrir ce coffre, je deuvrais trouver une cle...", () => (player.isInDialogue = false));
+                            displayDialogue(false, {}, "Je ne peux pas ouvrir ce coffre, je deuvrais trouver une cle...", () => (player.isInDialogue = false));
                         } else {
                             if (!player.chest_opened) {
                                 if (button.state === "on") k.play("poof-smoke");
@@ -377,7 +377,7 @@ k.scene("main", async () => {
                                 k.scale(scale),  // Optionnel : taille de l'explosion
                                 k.z(50)
                             ]);
-                            displayDialogue(false,{},"Je peut utiliser mon PC afin de voir mon linkedIn ou pour imprimer mon CV !",()=>{
+                            displayDialogue(false,{},"Je peux utiliser mon PC afin de voir mon linkedIn ou pour imprimer mon CV !",()=>{
                                 k.destroy(red_spark);
                                 darkOverlay.opacity = 0;
                                 player.isInDialogue = false;
