@@ -4,7 +4,7 @@ import { displayDialogue, setCamScale, setFontSize } from "./Utils";
 import loadSprites from "./SpriteLoader";
 import AudioManager from "./AudioManager";
 import { loadButton, updateButton } from "./gui/MusicButton";
-import { changeTileTexture, generateMap, loadMapData } from "./map/MapUtils";
+import { chargeTextureAt, changeTileTexture, generateMap, loadMapData } from "./map/MapUtils";
 
 let inside = false;
 var secretSlab = true;
@@ -74,7 +74,7 @@ k.scene("main", async () => {
     // Ajout des différents GameObjects
     k.add([
         k.sprite("chim", { anim: "burning" }),
-        k.pos(170, 8),
+        k.pos(170, 255),
         k.scale(scale),
         "chimney",
         k.z(1)
@@ -82,7 +82,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("tableau-adams"),
-        k.pos(20*scale*8.1, 20*scale*11.1),
+        k.pos(20*scale*8.1, 20*scale*16.1),
         k.scale(2),
         "tableau-adams",
         k.z(1)
@@ -90,7 +90,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("tableau-liberte"),
-        k.pos(20*scale*22.9, 20*scale*10.1),
+        k.pos(20*scale*22.9, 20*scale*15.1),
         k.scale(1.4),
         "tableau-liberte",
         k.z(1)
@@ -98,7 +98,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("computer", { anim: "idle" }),
-        k.pos(20*scale*11,20*scale*0),
+        k.pos(20*scale*11,20*scale*5),
         k.scale(scale),
         "computer",
         k.z(9)
@@ -106,7 +106,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("printer", { anim: "idle" }),
-        k.pos(20*scale*9,20*scale*0),
+        k.pos(20*scale*9,20*scale*5),
         k.scale(scale),
         "printer",
         k.z(9)
@@ -114,7 +114,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("map_tileset", { frame: 56 }),
-        k.pos(20*scale*24,20*scale*16),
+        k.pos(20*scale*24,20*scale*21),
         k.scale(scale),
         "copper_key",
         k.z(9),
@@ -122,8 +122,17 @@ k.scene("main", async () => {
     ]);
 
     k.add([
+        k.sprite("map_tileset", { frame: 46 }),
+        k.pos(20*scale*17.5,20*scale*3.5),
+        k.scale(scale),
+        "cartouches",
+        k.z(9),
+        k.opacity(0)
+    ]);
+
+    k.add([
         k.sprite("lilas"),
-        k.pos(20*scale*22.4,20*scale*17.9),
+        k.pos(20*scale*22.4,20*scale*22.9),
         k.scale(scale*0.8),
         "lilas",
         k.anchor("bot"),
@@ -132,7 +141,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("doorwall"),
-        k.pos(20*scale*18, 20*scale*5),
+        k.pos(20*scale*18, 20*scale*10),
         k.scale(scale),
         "doorwall",
         k.anchor("bot"),
@@ -141,7 +150,7 @@ k.scene("main", async () => {
 
     k.add([
         k.sprite("bankdoor", { anim: "idle" }),
-        k.pos(20*scale*18, 20*scale*5),
+        k.pos(20*scale*18, 20*scale*10),
         k.scale(1.8),
         "bankdoor",
         k.anchor("bot"),
@@ -193,13 +202,13 @@ k.scene("main", async () => {
                             copper_key.opacity = 1;
                             k.add([
                                 k.sprite("map_tileset", { frame: 58 }),
-                                k.pos(20*scale*24.5,20*scale*15.5),
+                                k.pos(20*scale*24.5,20*scale*20.5),
                                 k.scale(scale),
                                 k.z(9)
                             ]);
                             k.add([
                                 k.sprite("map_tileset", { frame: 59 }),
-                                k.pos(20*scale*25.5,20*scale*15.5),
+                                k.pos(20*scale*25.5,20*scale*20.5),
                                 k.scale(scale),
                                 k.z(9)
                             ]);
@@ -207,7 +216,7 @@ k.scene("main", async () => {
                             var smoke = k.add([
                                 k.sprite("smoke", { anim: "smoke" }),  // Utiliser l'animation "explode"
                                 k.anchor("center"),
-                                k.pos(20*scale*24.5,20*scale*16.5),  // Position de l'explosion
+                                k.pos(20*scale*24.5,20*scale*21.5),  // Position de l'explosion
                                 k.scale(scale),  // Optionnel : taille de l'explosion
                                 k.z(50)
                             ]);
@@ -228,33 +237,105 @@ k.scene("main", async () => {
                 }
                 if(event.name === "bankdoor") {
                     player.onCollide(event.name, () => {
-                        if (!player.bankdoor_opened) {
-                            let bankdoor = k.get("bankdoor")[0];
-                            player.bankdoor_opened = true;
-                            bankdoor.play("open");
-                            if (button.state === "on") k.play("metal-sound", { volume: 0.8 });
-                            bankdoor.onAnimEnd((anim) => {
-                                if (anim === "open") {
-                                    bankdoor.play("opened")
-                                    //let boundary = k.get("close");
-                                    //console.log(map)
-                                    map.remove(map.get("close-boundary")[0])
-                                    //test.hidden = true;
-                                    //map.destroy(test)
-                                    //console.log("pute")
-                                    //boundary.forEach( (bound) => bound.id == 58 ? bound.visible = false : console.log("zut"))
-                                    //boundary.hidden = true;
+                        if (player.printed) {
+                            if (!player.bankdoor_opened) {
+                                let bankdoor = k.get("bankdoor")[0];
+                                player.bankdoor_opened = true;
+                                bankdoor.play("open");
+                                if (button.state === "on") k.play("metal-sound", { volume: 0.8 });
+                                bankdoor.onAnimEnd((anim) => {
+                                    if (anim === "open") {
+                                        bankdoor.play("opened")
+                                        map.remove(map.get("close-boundary")[0])
+                                        let cartouches = k.get("cartouches")[0];
+                                        cartouches.opacity = 1;
+                                        chargeTextureAt("ground",16,9,32)
+                                        chargeTextureAt("ground",17,9,33)
+                                        chargeTextureAt("ground",18,9,32)
+                                        chargeTextureAt("ground",19,9,33)
+                                        chargeTextureAt("ground",16,8,33)
+                                        chargeTextureAt("ground",17,8,32)
+                                        chargeTextureAt("ground",18,8,33)
+                                        chargeTextureAt("ground",19,8,32)
+                                        chargeTextureAt("ground",16,7,32)
+                                        chargeTextureAt("ground",17,7,33)
+                                        chargeTextureAt("ground",18,7,32)
+                                        chargeTextureAt("ground",19,7,33)
+                                        chargeTextureAt("ground",16,6,33)
+                                        chargeTextureAt("ground",17,6,32)
+                                        chargeTextureAt("ground",18,6,33)
+                                        chargeTextureAt("ground",19,6,32)
+                                        chargeTextureAt("ground",15,5,33)
+                                        chargeTextureAt("ground",16,5,32)
+                                        chargeTextureAt("ground",17,5,33)
+                                        chargeTextureAt("ground",18,5,32)
+                                        chargeTextureAt("ground",19,5,33)
+                                        chargeTextureAt("ground",16,5,33)
+                                        chargeTextureAt("ground",17,5,32)
+                                        chargeTextureAt("ground",18,5,33)
+                                        chargeTextureAt("ground",19,5,32)
+                                        chargeTextureAt("ground",20,5,33)
+                                        chargeTextureAt("ground",15,4,33)
+                                        chargeTextureAt("ground",16,4,32)
+                                        chargeTextureAt("ground",17,4,33)
+                                        chargeTextureAt("ground",18,4,32)
+                                        chargeTextureAt("ground",19,4,33)
+                                        chargeTextureAt("ground",20,4,32)
+                                        chargeTextureAt("ground",15,3,32)
+                                        chargeTextureAt("ground",16,3,33)
+                                        chargeTextureAt("ground",17,3,32)
+                                        chargeTextureAt("ground",18,3,33)
+                                        chargeTextureAt("ground",19,3,32)
+                                        chargeTextureAt("ground",20,3,33)
+                                        chargeTextureAt("ground",15,2,33)
+                                        chargeTextureAt("ground",16,2,32)
+                                        chargeTextureAt("ground",17,2,33)
+                                        chargeTextureAt("ground",18,2,32)
+                                        chargeTextureAt("ground",19,2,33)
+                                        chargeTextureAt("ground",20,2,32)
+                                        chargeTextureAt("ground",15,1,34)
+                                        chargeTextureAt("ground",16,1,34)
+                                        chargeTextureAt("ground",17,1,34)
+                                        chargeTextureAt("ground",18,1,34)
+                                        chargeTextureAt("ground",19,1,34)
+                                        chargeTextureAt("ground",20,1,34)
+                                        chargeTextureAt("ground",15,0,35)
+                                        chargeTextureAt("ground",16,0,34)
+                                        chargeTextureAt("ground",17,0,34)
+                                        chargeTextureAt("ground",18,0,34)
+                                        chargeTextureAt("ground",19,0,34)
+                                        chargeTextureAt("ground",20,0,36)
+                                        //test.hidden = true;
+                                        //map.destroy(test)
+                                        //console.log("pute")
+                                        //boundary.forEach( (bound) => bound.id == 58 ? bound.visible = false : console.log("zut"))
+                                        //boundary.hidden = true;
 
-                                    /*map.children().forEach(child => {
-                                        if (child.name === "close") {
-                                            console.log("Trouvé l'objet 'bankdoor'", child);
-                                        }
-                                    });*/
-                                }
+                                        /*map.children().forEach(child => {
+                                            if (child.name === "close") {
+                                                console.log("Trouvé l'objet 'bankdoor'", child);
+                                            }
+                                        });*/
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+
+                if(event.name === "cartouches") {
+                    player.onCollide(event.name, () => {
+                        if(player.printed) {
+                            player.isInDialogue = true;
+                            displayDialogue(false, {}, "Des cartouches d'encre, cela vaut plus cher que l'or !", () => {
+                                player.isInDialogue = false;
+                                player.printed = false;
+                                if (button.state === "on" && !player.copper_key) k.play("pickup", { volume: 0.4 });
                             });
                         }
                     });
                 }
+
                 if(event.name === "coffre"){
                     player.onCollide(event.name, () => {
                         if (!player.copper_key) {
@@ -266,7 +347,7 @@ k.scene("main", async () => {
                                 var smoke = k.add([
                                     k.sprite("smoke", { anim: "smoke" }),  // Utiliser l'animation "explode"
                                     k.anchor("center"),
-                                    k.pos(20*scale*25,20*scale*3),  // Position de l'explosion
+                                    k.pos(20*scale*25,20*scale*8),  // Position de l'explosion
                                     k.scale(scale),  // Optionnel : taille de l'explosion
                                     k.z(50)
                                 ]);
@@ -373,7 +454,7 @@ k.scene("main", async () => {
                             var red_spark = k.add([
                                 k.sprite("red_spark", { anim: "red_spark" }),  // Utiliser l'animation "explode"
                                 k.anchor("center"),
-                                k.pos(20*scale*11.95,20*scale*1),  // Position de l'explosion
+                                k.pos(20*scale*11.95,20*scale*6),  // Position de l'explosion
                                 k.scale(scale),  // Optionnel : taille de l'explosion
                                 k.z(50)
                             ]);
@@ -394,7 +475,7 @@ k.scene("main", async () => {
                             var red_spark = k.add([
                                 k.sprite("red_spark", { anim: "red_spark" }),  // Utiliser l'animation "explode"
                                 k.anchor("center"),
-                                k.pos(20*scale*25,20*scale*3.25),  // Position de l'explosion
+                                k.pos(20*scale*25,20*scale*8.25),  // Position de l'explosion
                                 k.scale(scale),  // Optionnel : taille de l'explosion
                                 k.z(50)
                             ]);
