@@ -332,7 +332,7 @@ k.scene("main", async () => {
                     player.onCollide(event.name, () => {
                         if(player.printed) {
                             player.isInDialogue = true;
-                            displayDialogue(false, {}, "Des cartouches d'encre, cela vaut plus cher que l'or !", () => {
+                            displayDialogue(false, {}, "Des cartouches d'encre, je ferais mieux d'en prendre une !", () => {
                                 player.isInDialogue = false;
                                 player.printed = false;
                                 if (button.state === "on" && !player.copper_key) k.play("pickup", { volume: 0.4 });
@@ -345,7 +345,7 @@ k.scene("main", async () => {
                     player.onCollide(event.name, () => {
                         if (!player.copper_key) {
                             player.isInDialogue = true;
-                            displayDialogue(false, {}, "Je ne peux pas ouvrir ce coffre, je deuvrais trouver une cle...", () => (player.isInDialogue = false));
+                            displayDialogue(false, {}, "Je ne peux pas ouvrir ce coffre, je devrai trouver une cle...", () => (player.isInDialogue = false));
                         } else {
                             if (!player.chest_opened) {
                                 if (button.state === "on") k.play("poof-smoke", { volume: 1 });
@@ -496,7 +496,7 @@ k.scene("main", async () => {
                 if(event.name === "adam" ){
                     player.onCollide(event.name, () => {
                             player.isInDialogue = true;
-                            displayDialogue(false,{},"\"La creation d'Adam\", j'aime beaucoup l'ironie qui s'en degage.",()=>{
+                            displayDialogue(false,{},"\"La creation d'Adam\", j'aime beaucoup l'ironie qui se degage de cette oeuvre.",()=>{
                                 player.isInDialogue = false;
                             });
                     });
@@ -504,7 +504,7 @@ k.scene("main", async () => {
                 if(event.name === "liberte" ){
                     player.onCollide(event.name, () => {
                             player.isInDialogue = true;
-                            displayDialogue(false,{},"\"La liberte guidant le peuple\"",()=>{
+                            displayDialogue(false,{},"\"La liberte guidant le peuple\", symbole de lutte pour la liberte et d'aspiration pour la democratie.",()=>{
                                 player.isInDialogue = false;
                             });
                     });
@@ -512,7 +512,7 @@ k.scene("main", async () => {
                 if(event.name === "lilas" ){
                     player.onCollide(event.name, () => {
                             player.isInDialogue = true;
-                            displayDialogue(false,{},"J'adore l'odeur des lilas.",()=>{
+                            displayDialogue(false,{},"J'adore l'odeur des lilas, ils me rappellent mon enfance.",()=>{
                                 player.isInDialogue = false;
                             });
                     });

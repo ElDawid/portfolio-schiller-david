@@ -26,14 +26,9 @@ export function displayDialogue(options, optionTextObj, text, onDisplayEnd){
     
 
     dialogueUI.style.display = "block";
-    if (options) {
-        dialogueOptions.style.display = "flex";
-        option1.innerText = optionTextObj.option1;
-        option2.innerText = optionTextObj.option2;
-    } else {
+    if (!options) {
         dialogueOptions.style.display = "none";
     }
-
     let index = 0;
     let currentText = "";
     const intervalRef = setInterval(() => {
@@ -42,6 +37,14 @@ export function displayDialogue(options, optionTextObj, text, onDisplayEnd){
             dialogue.innerHTML = currentText;
             index++;
             return;
+        } else {
+            if (options) {
+                dialogueOptions.style.display = "flex";
+                option1.innerText = optionTextObj.option1;
+                option2.innerText = optionTextObj.option2;
+            } else {
+                dialogueOptions.style.display = "none";
+            }
         }
         clearInterval(intervalRef);
         if (options) {
